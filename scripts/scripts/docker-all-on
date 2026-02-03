@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-# Enciende Docker Engine (host). Requiere auth vía Polkit (pkexec).
-/usr/bin/pkexec /usr/bin/systemctl start containerd.service docker.socket docker.service
-
-# Enciende Docker Desktop (servicio de usuario), si existe.
-# Si no está instalado o no existe el unit, no rompe.
- /usr/bin/systemctl --user start docker-desktop.service 2>/dev/null || true
