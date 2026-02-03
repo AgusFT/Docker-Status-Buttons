@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Apaga Docker Desktop primero (VM / stack propio).
+/usr/bin/systemctl --user stop docker-desktop.service 2>/dev/null || true
+
+# Apaga Docker Engine (host) + socket + containerd.
+# Importante: si dejás docker.socket activo, puede reactivar dockerd.
+ /usr/bin/pkexec /usr/bin/systemctl stop docker.service docker.socket containerd.service
