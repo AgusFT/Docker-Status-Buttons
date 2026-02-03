@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Detecta si está activo Docker Engine (host) o Docker Desktop (user).
+is_on=0
+
+for unit in docker.service docker.socket containerd.service; do
+  if /usr/bin/systemctl is-active --quiet "$unit"; then
+    is_on=1
+  fi
+done
+
+if /usr/bin/systemctl --user is-active --quiet docker-desktop.service 2>/dev/null; then
+  is_on=1
+fi
+
+if [ "$is_on" -eq 1 ]; then
+  echo "🐳 DOCKER: ON"
+else
+  echo "🐳 DOCKER: OFF"
+fi
